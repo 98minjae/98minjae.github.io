@@ -150,11 +150,11 @@
               To address the challenge, we propose an efficient online continual learning method using the neural collapse phenomenon. 
               In particular, we induce neural collapse to form a simplex equiangular tight frame (ETF) structure in the representation space so that the continuously learned model with a single epoch can better fit to the streamed data by proposing <b>preparatory data training</b> and <b>residual correction</b> in the representation space, named <b>Equi-Angular Representation Learning (EARL)</b>. 
               With an extensive set of empirical validations using CIFAR-10/100, TinyImageNet, ImageNet-200, and ImageNet-1K, we show that our proposed method outperforms state-of- the-art methods by a noticeable margin in various online continual learning scenarios such as disjoint and Gaussian scheduled continuous (i.e., boundary-free) data setups. -->
-              Despite the strong adaptation to user-specific preferences, training with large-scale visual instruction tuning data increase the risks of overfitting and delays in training time. 
+              Despite the strong adaptation to user-specific preferences, recent Multimodal Large Language Models (MLLMs) face the risks of overfitting and delays in training time when training with increasing number of large-scale visual instruction tuning data in a continual learning (CL) setting. 
               To address the challenge, we propose Online Adaptive Sample selection via Informative Statistics (OASIS)
               , which (i) adaptively adjusts the number of selected samples per batch based on informativeness
-              , and (ii) reduces redundancy based on sample-wise similarity.
-              With experiments with various continual visual instruction tuning (CVIT) benchmarks, we show that OASIS outperforms the state-of-the-art in both LLaVA-1.5 and Qwen-VL-2.5 model architectures.
+              and (ii) reduces redundancy based on sample-wise similarity.
+              With experiment results with various continual visual instruction tuning (CVIT) benchmarks, we show that OASIS outperforms the state-of-the-art in both LLaVA-1.5 and Qwen-VL-2.5 model architectures.
             </p>
           </div>
         </div>
@@ -172,6 +172,10 @@
     <h2 class="title is-3">OASIS: Online Sample Selection for Continual Visual Instruction Tuning</h2>
     <div class="content has-text-justified">
       <p>
+        OASIS, first scores Informativeness for all samples in the online batch. 
+        Then, through SIREN, OASIS approximates the change in Informativeness when assuming high informative samples in the same batch are trained.
+        Finally, OASIS transforms Informativeness to Relative Informativeness (i.e., Informativeness of each sample compared to other batch samples)
+        and performs Bernoulli sampling based on Relative Informativeness of each sample.
         <!-- Despite the success of the fixed ETF classifier in both the imbalanced training and offline CL, the ETF classifier has not yet been explored for online CL due to the necessity of sufficient training for neural collapse. 
         To be specific, streamed data are trained only once in online CL, which makes it harder to induce neural collapse than in offline CL which supports multi-epoch training.  -->
         
@@ -187,18 +191,35 @@
         </div>
       </div>
       <p></p>
-      <h4 class="title is-3">What do we need Relative Informativeness</h4>
+      <h4 class="title is-3">What is SIREN?</h4>
+        SIREN, short for Similarity-Aware Information Redundancy Elimination, prevents us from selecting similar samples in the same batch despite high Informativeness. 
+        As similar task data tend to arrive together, samples in the same batch are highly likely to have similar information.
+        Therefore, selecting fixed number of high informative/diverse samples in each batch like current online data selection do results in redundant training.
+        To reduce redundancy, we adjust Informativeness of each sample based on samplewise similarity. 
+        We iteratively identify the highest informative sample and reduce Informativness of the rest of the samples based on their similarity to the identified sample.
         <!-- For preparatory data to have a different representation from existing classes when trained, their image semantics should be distinguishable from the existing classes, provided that they contain enough semantic information to be considered as an image (i.e., not a noise). 
         There are various approaches to synthesize images with modified semantics, such as using the generative model or the negative transformation. 
         We use the negative transformation, as the generative model is expensive in computation and storage, which is undesirable for CL scenarios with limited memory and computations. 
         On the contrary, negative transformation is relatively efficient in computation and storage and is reported to create images with semantics different from the original image. 
         Speficially, we use negative rotation (rotation 90, 180, and 270 degrees) as negative transformation.
         We empirically observed that data generated through negative rotation have a distinct semantic class from the original class. -->
-
+      <p></p>
+        <h4 class="title is-3">What is Relative Informativenss?</h4>
+        Informativeness of each sample doesn't quantify the relative importance of the sample compared to samples in the other batches.
+        Therefore, we transform Informativeness to Relative Informativeness to estimate each sample’s relative position with respect to the average Informativeness of encountered samples.
+        In doing so, we apply Z-score normalization to Informativeness to quantify a sample’s deviation from the overall Informativness distribution.
+        As shown in the figure below, since observed data approximates a normal distribution, it is feasible to use Z-score normalization.
+          <!-- For preparatory data to have a different representation from existing classes when trained, their image semantics should be distinguishable from the existing classes, provided that they contain enough semantic information to be considered as an image (i.e., not a noise). 
+          There are various approaches to synthesize images with modified semantics, such as using the generative model or the negative transformation. 
+          We use the negative transformation, as the generative model is expensive in computation and storage, which is undesirable for CL scenarios with limited memory and computations. 
+          On the contrary, negative transformation is relatively efficient in computation and storage and is reported to create images with semantics different from the original image. 
+          Speficially, we use negative rotation (rotation 90, 180, and 270 degrees) as negative transformation.
+          We empirically observed that data generated through negative rotation have a distinct semantic class from the original class. -->
+  
         <p></p>
         <div class="columns is-centered has-text-centered">
           <div class="column is-fullwidth">
-            <img src='static/figures/informativeness.png' style="margin-left: auto; margin-right: auto; display: block; border-style: none width:80%;max-width:80%">
+            <img src='./static/figures/informativenss.png' style="margin-left: auto; margin-right: auto; display: block; border-style: none width:80%;max-width:80%">
           </div>
         </div>
         <p></p>
