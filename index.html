@@ -1,245 +1,355 @@
 <!DOCTYPE HTML>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
 
-  <title>Minjae Lee</title>
+    <title>Minjae Lee</title>
 
-  <meta name="author" content="Minjae Lee">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Minjae Lee">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
-  <link rel="icon" type="image/png" href="images/seal_icon.png">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 
-<body>
-  <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-    <tr style="padding:0px">
-      <td style="padding:0px">
-        <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;text-align:center"><tbody>
-          <tr style="padding:0px">
-            <td style="padding:0%;width:63%;vertical-align:middle">
-              <p style="text-align:center">
-                <name>Minjae Lee</name>
-              </p>
-              <p style="text-align:justify">
-                I'm a MS. student in 
-                  <a href="https://gsai.snu.ac.kr/" target="_new">Interdisciplinary Program in Artificial Intelligence(IPAI)</a>, 
-                  <a href="https://mpr.snu.ac.kr/" target="_new">Machine Perception and Reasoning Lab.</a>
-                  at <a href="https://en.snu.ac.kr/" target="_new">Seoul National University</a> advised by
-                  Prof. <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>.
-                My research focus is on efficient learning and multi-modal learning.
-              </p>
-              <!-- <p style="text-align:justify">
-                During my M.S., I was fortunate to work as a research intern at the AML (Advanced Machine Learning) team in <a href="https://www.lgresearch.ai" target="_new">LG AI research</a> (2023).
-                <b>Currently, I am looking for a research internship position for continual learning research.</b>
-              </p> -->
-              <p style="text-align:justify">
-                I received B.S. from <a href="https://www.yonsei.ac.kr/en_sc/" target="_new">Yonsei University</a>
-                  under the supervision of Prof. <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>.
-              </p>
-              <p style="text-align:center">
-                <!-- <a href="personal/CV.pdf" target="_new">CV</a> &nbsp/&nbsp -->
-                <a href="personal/CV.pdf" target="_new">CV</a> &nbsp/&nbsp
-                <a href="mailto:mj1020@snu.ac.kr">Email</a> &nbsp/&nbsp
-                <a href="https://scholar.google.com/citations?hl=ko&user=YWWOFx0AAAAJ" target="_new">Google Scholar</a> &nbsp/&nbsp
-                <!-- <a href="https://dblp.org/pid/350/4104.html" target="_new">DBLP</a> &nbsp/&nbsp -->
-                <a href="https://github.com/98minjae/" target="_new">Github</a> &nbsp/&nbsp
-                <a href="https://www.linkedin.com/in/minjae-lee-307102210/" target="_new">LinkedIn</a> &nbsp/&nbsp
-              </p>
-            </td>
-            <td style="padding:0%;width:28%;max-width:40%">
-              <img style="width:70%;max-width:100%" alt="profile photo" src="personal/me.jpg" class="hoverZoomLink">
-            </td>
-          </tr>
-        </tbody></table>
-        <br>
+    <!-- Bump ?v= whenever stylesheet.css changes, so returning visitors get the new file. -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css?v=2026-11-01e">
 
+    <!-- Apply saved theme before paint to avoid a flash -->
+    <script>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
 
+  <body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 
+    <table style="width:100%;max-width:800px;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+      <tbody>
+        <tr>
+          <td style="padding:0 8px;">
 
-        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <td style="padding:0px;width:100%;vertical-align:middle"><heading>&nbsp&nbsp&nbsp Work Experience</heading></td>
-        </tbody></table>
-        <p></p> -->
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;;style=text-align:justify"><tbody>
-          <!-- ################################################################################################################### -->
-          <!-- <tr>
-            <td style="padding:0px;width:25%;vertical-align:middle" align="center">
-                <img src='work_experiences/LGAIReasearch/logo.png' style="border-style: none width:100%;max-width:70%">
-            </td>
-            <td width="75%" valign="middle" align="justify">
-              <papertitle>
-                  <a href="https://www.lgresearch.ai">LG AI research</a>
-              </papertitle>
-              <br>
+            <!-- ───────────── Header / Profile ───────────── -->
+            <table class="stack-mobile" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:2.5%;width:63%;vertical-align:middle;">
+                    <p class="name">Minjae Lee</p>
+                    <p>
+                      I'm an M.S. student in the
+                      <a href="https://gsai.snu.ac.kr/">Interdisciplinary Program in Artificial Intelligence (IPAI)</a>,
+                      <a href="https://mpr.snu.ac.kr/">Machine Perception and Reasoning Lab</a>
+                      at <a href="https://en.snu.ac.kr/">Seoul National University</a>, advised by
+                      <a href="http://ppolon.github.io/">Prof. Jonghyun Choi</a>.
+                      My research focuses on efficient learning and multi-modal learning.
+                    </p>
+                    <p>
+                      I received my B.S. from <a href="https://www.yonsei.ac.kr/en_sc/">Yonsei University</a>
+                      under the supervision of <a href="http://ppolon.github.io/">Prof. Jonghyun Choi</a>.
+                    </p>
+                    <p class="profile-links">
+                      <a href="mailto:mj1020@snu.ac.kr">Email</a> &nbsp;/&nbsp;
+                      <a href="personal/CV.pdf">CV</a> &nbsp;/&nbsp;
+                      <a href="https://scholar.google.com/citations?hl=ko&user=YWWOFx0AAAAJ">Scholar</a> &nbsp;/&nbsp;
+                      <a href="https://github.com/98minjae/">Github</a> &nbsp;/&nbsp;
+                      <a href="https://www.linkedin.com/in/minjae-lee-307102210/">LinkedIn</a>
+                    </p>
+                  </td>
+                  <td style="padding:2.5%;width:37%;vertical-align:middle;">
+                    <a href="personal/profile.jpg">
+                      <img src="personal/profile.jpg" alt="profile photo" class="profile-photo">
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-              Research Intern at <a href="https://www.lgresearch.ai">AML Team</a> (Feb. 2023 ~ Aug. 2023)
-              <br>
+            <!-- ───────────── News ─────────────
+                 Add new items at the top. Swap the year for "Mon YYYY" if you like. -->
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px;">
+                    <h2>News</h2>
+                    <ul class="news-list" tabindex="0" aria-label="News (scrollable)">
+                      <li>🎤 <span class="news-date">Oct 2026</span> — I am invited to give a talk at Naver Labs - <em>"Fast Adaptation in Large Models without Forgetting"</em>.</li>
+                      <li>🚀 <span class="news-date">Aug 2026</span> — I am joining NAVER Cloud as a Research Intern.</li>
+                      <li>📝 <span class="news-date">2026</span> — ProCoRE was accepted to NeurIPS&nbsp;2026.</li>
+                      <li>📝 <span class="news-date">2026</span> — OASIS was accepted to ACL&nbsp;2026.</li>
+                      <li>📍 <span class="news-date">Jun 2025</span> — I am joining RIKEN AIP as a Student Trainee.</li>
+                      <li>📝 <span class="news-date">2025</span> — GenOL was accepted to TMLR&nbsp;2025.</li>
+                      <li>📝 <span class="news-date">2024</span> — EARL was accepted to CVPR&nbsp;2024.</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-              Mentor: <a href="https://moontae.people.uic.edu/">Dr. Moontae Lee</a>
-            </td>
-          </tr> -->
-          <!-- ################################################################################################################### -->
-        </tbody></table>
+            <!-- ───────────── Affiliations ───────────── -->
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px;">
+                    <h2>Affiliations</h2>
+                    <div class="affiliations">
+                      <div class="aff-card">
+                        <div class="aff-logo"><img src="images/yonsei.png" alt="Yonsei University"></div>
+                        <div class="aff-text">
+                          <div class="aff-role">B.S.</div>
+                          <div class="aff-where">Yonsei University</div>
+                          <div class="aff-where2">VnL Lab</div>
+                          <div class="aff-pi">Advisor: <a href="http://ppolon.github.io/">Jonghyun Choi</a></div>
+                          <span class="aff-date">Mar 2018 – Feb 2024</span>
+                        </div>
+                      </div>
+                      <div class="aff-card">
+                        <div class="aff-logo"><img src="images/yonsei.png" alt="Yonsei University"></div>
+                        <div class="aff-text">
+                          <div class="aff-role">M.S.</div>
+                          <div class="aff-where">Yonsei University</div>
+                          <div class="aff-where2">VnL Lab</div>
+                          <div class="aff-pi">Advisor: <a href="http://ppolon.github.io/">Jonghyun Choi</a></div>
+                          <span class="aff-date">Mar 2024 – Aug 2024</span>
+                        </div>
+                      </div>
+                      <div class="aff-card">
+                        <div class="aff-logo"><img src="images/riken.png" alt="RIKEN"></div>
+                        <div class="aff-text">
+                          <div class="aff-role">Student Trainee</div>
+                          <div class="aff-where">RIKEN AIP</div>
+                          <div class="aff-where2">Approximate Bayesian Inference Team</div>
+                          <span class="aff-date">Jun 2025</span>
+                        </div>
+                      </div>
+                      <div class="aff-card">
+                        <div class="aff-logo"><img src="images/snu-crop.png" alt="Seoul National University"></div>
+                        <div class="aff-text">
+                          <div class="aff-role">M.S.</div>
+                          <div class="aff-where">Seoul National University</div>
+                          <div class="aff-where2">MPR Lab</div>
+                          <div class="aff-pi">Advisor: <a href="http://ppolon.github.io/">Jonghyun Choi</a></div>
+                          <span class="aff-date">Sep 2024 – Present</span>
+                        </div>
+                      </div>
+                      <div class="aff-card">
+                        <div class="aff-logo aff-logo--wide"><img src="images/navercloud-crop.jpeg" alt="NAVER Cloud"></div>
+                        <div class="aff-text">
+                          <div class="aff-role">Research Intern</div>
+                          <div class="aff-where">NAVER Cloud</div>
+                          <div class="aff-where2">Multimodal Foundation Team</div>
+                          <span class="aff-date">Aug 2026 – Present</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
+            <!-- ───────────── Publications ───────────── -->
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px 16px 0;"><h2>Publications</h2></td>
+                </tr>
+                <tr>
+                  <td style="padding:0 0 0 16px;font-size:13px;color:var(--text-muted);">* Equal contribution</td>
+                </tr>
+              </tbody>
+            </table>
 
-        <p></p>
+            <table class="stack-mobile" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <td style="padding:0px;width:100%;vertical-align:middle"><heading>&nbsp&nbsp&nbsp Publications</heading></td>
-        </tbody></table>
+                <tr class="paper-row">
+                  <td style="padding:16px;width:35%;vertical-align:middle;">
+                    <img src="papers/min2024just/min2026procore.png" class="paper-img" alt="Visual Grounding First thumbnail">
+                  </td>
+                  <td style="padding:8px 16px 8px 8px;width:65%;vertical-align:middle;">
+                    <a href="https://arxiv.org/abs/2610.30592">
+                      <span class="papertitle">Visual Grounding First, Multimodal In-context Learning Follows</span>
+                    </a><br>
+                    Minhyuk Seo*, <strong>Minjae Lee</strong>*, Chaeeun Lee, Wei Lin, Muhammad Jehanzeb Mirza, Tinne Tuytelaars,
+                    <a href="http://ppolon.github.io/">Jonghyun Choi</a><br>
+                    <span class="venue-badge venue-badge--accepted">NeurIPS 2026</span>
+                    <div class="paper-links">
+                      [<a href="https://arxiv.org/abs/2610.30592">pdf</a>]
+                    </div>
+                    <!-- TODO: min2026procore.bib currently holds the OASIS entry. Fix it, then add:
+                         [<a href="papers/min2024just/min2026procore.bib">bibtex</a>] -->
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;;style=text-align:justify"><tbody>
-          <!-- ################################################################################################################### -->
-          <tr>
-            <td style="padding:15px;width:40%;vertical-align:middle">
-                <img src='papers/min2024just/min2026procore.png' style="display:block;width:100%;max-width:100%;height:auto;">
-            </td>
-            <td width="60%" valign="middle" align="justify">
-              <a>
-                <papertitle>
-                  Visual Grounding First, Multimodal In-context Learning Follows
-                </papertitle>
-              </a>
-              <br>
-              Minhyuk Seo*,  <strong>Minjae Lee</strong>*, Chaeeun Lee, Wei Lin, Muhammad Jehanzeb Mirza, Tinne Tuytelaars,
-              <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>
-              <br>
-              NeurIPS 2026
-              <!-- <b style="color:Magenta;">(to appear)</b> -->
-              <br>
-              <!-- [<a href="https://arxiv.org/abs/2610.30592" target="_new">pdf</a>] -->
-              [<a href="" target="_new">pdf</a>] (To appear)
-              <!-- [<a href="papers/min2024just/min2026procore.bib" target="_new">bibtex</a>] -->
-            </td>
-          </tr>
-          <!-- ################################################################################################################### -->
-          <tr>
-            <td style="padding:15px;width:40%;vertical-align:middle">
-                <img src='papers/min2024just/min2026oasis.png' style="display:block;width:100%;max-width:100%;height:auto;">
-            </td>
-            <td width="60%" valign="middle" align="justify">
-              <a>
-                <papertitle>
-                  OASIS: Online Sample Selection for Continual Instruction Tuning
-                </papertitle>
-              </a>
-              <br>
-              <strong>Minjae Lee</strong>*, 
-              Minhyuk Seo*, Tingyu Qu, Tinne Tuytelaars,
-              <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>
-              <br>
-              ACL 2026 (Main)
-              <!-- <b style="color:Magenta;">(to appear)</b> -->
-              <br>
+                  </td>
+                </tr>
 
-              [<a href="https://aclanthology.org/2026.acl-long.158.pdf" target="_new">pdf</a>]
-              [<a href="papers/min2024just/min2024just.bib" target="_new">bibtex</a>]
-              <!-- [<a href="https://github.com/snumprlab/cl-alfred" target="_new">code</a>] -->
-            </td>
-          </tr>
-          <!-- ################################################################################################################### -->
-          <tr>
-            <td style="padding:15px;width:40%;vertical-align:middle">
-                <img src='papers/min2024just/min2024just.png' style="display:block;width:100%;max-width:100%;height:auto;">
-            </td>
-            <td width="60%" valign="middle" align="justify">
-              <a>
-                <papertitle>
-                  Just Say the Name: Online Continual Learning with Category Names Only via Data Generation
-                </papertitle>
-              </a>
-              <br>
-              Minhyuk Seo, Seongwon Cho,
-              <strong>Minjae Lee</strong>,
-              Diganta Misra, Hyeonbeom Choi, Seon Joo Kim,
-              <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>
-              <br>
+                <tr class="paper-row">
+                  <td style="padding:16px;width:35%;vertical-align:middle;">
+                    <img src="papers/min2024just/min2026oasis.png" class="paper-img" alt="OASIS thumbnail">
+                  </td>
+                  <td style="padding:8px 16px 8px 8px;width:65%;vertical-align:middle;">
+                    <a href="projects/OASIS/">
+                      <span class="papertitle">OASIS: Online Sample Selection for Continual Instruction Tuning</span>
+                    </a><br>
+                    <strong>Minjae Lee</strong>*, Minhyuk Seo*, Tingyu Qu, Tinne Tuytelaars,
+                    <a href="http://ppolon.github.io/">Jonghyun Choi</a><br>
+                    <span class="venue-badge venue-badge--accepted">ACL 2026 (Main)</span>
+                    <div class="paper-links">
+                      [<a href="https://aclanthology.org/2026.acl-long.158.pdf">pdf</a>]
+                      [<a href="papers/min2024just/min2026oasis.bib">bibtex</a>]
+                    </div>
+                  </td>
+                </tr>
 
-              Transactions on Machine Learning Research (TMLR) 2025
-              <!-- <b style="color:Magenta;">(to appear)</b> -->
-              <br>
+                <tr class="paper-row">
+                  <td style="padding:16px;width:35%;vertical-align:middle;">
+                    <img src="papers/min2024just/min2024just.png" class="paper-img" alt="Just Say the Name thumbnail">
+                  </td>
+                  <td style="padding:8px 16px 8px 8px;width:65%;vertical-align:middle;">
+                    <a href="https://arxiv.org/abs/2403.10853">
+                      <span class="papertitle">Just Say the Name: Online Continual Learning with Category Names Only via Data Generation</span>
+                    </a><br>
+                    Minhyuk Seo, Seongwon Cho, <strong>Minjae Lee</strong>, Diganta Misra, Hyeonbeom Choi, Seon Joo Kim,
+                    <a href="http://ppolon.github.io/">Jonghyun Choi</a><br>
+                    <span class="venue-badge venue-badge--accepted">TMLR 2025</span>
+                    <div class="paper-links">
+                      [<a href="https://arxiv.org/pdf/2403.10853.pdf">pdf</a>]
+                      [<a href="papers/min2024just/min2024just.bib">bibtex</a>]
+                    </div>
+                  </td>
+                </tr>
 
-              [<a href="https://arxiv.org/pdf/2403.10853.pdf" target="_new">pdf</a>]
-              [<a href="papers/min2024just/min2024just.bib" target="_new">bibtex</a>]
-              <!-- [<a href="https://github.com/snumprlab/cl-alfred" target="_new">code</a>] -->
-            </td>
-          </tr>
-          <!-- ################################################################################################################### -->
-          <tr>
-            <td style="padding:15px;width:40%;vertical-align:middle">
-                <img src='papers/min2024just/min2024learning.png' style="display:block;width:100%;max-width:100%;height:auto;">
-            </td>
-            <td width="60%" valign="middle" align="justify">
-              <a href="https://github.com/98minjae/earl">
-                <papertitle>
-                  Learning Equi-angular Representations for Online Continual Learning
-                </papertitle>
-              </a>
-              <br>
-              <!-- <strong>Byeonghwi Kim</strong>*, -->
-              Minhyuk Seo,
-              Hyunseo Koh,
-              Wonje Jeung, 
-              <strong>Minjae Lee</strong>, 
-              San Kim, 
-              <a href="http://hankook.github.io/" target="_new">Hankook Lee</a>,
-              Sungjun Cho, 
-              Sungik Choi, 
-              Hyunwoo Kim, 
-              <a href="http://ppolon.github.io/" target="_new">Jonghyun Choi</a>,
-              <br>
-              CVPR 2024
-              <!-- CVPR 2024 <b style="color:Magenta;">(to appear)</b> -->
-              <br>
+                <tr class="paper-row">
+                  <td style="padding:16px;width:35%;vertical-align:middle;">
+                    <img src="papers/min2024just/min2024learning.png" class="paper-img" alt="EARL thumbnail">
+                  </td>
+                  <td style="padding:8px 16px 8px 8px;width:65%;vertical-align:middle;">
+                    <a href="https://arxiv.org/abs/2404.01628">
+                      <span class="papertitle">Learning Equi-angular Representations for Online Continual Learning</span>
+                    </a><br>
+                    Minhyuk Seo, Hyunseo Koh, Wonje Jeung, <strong>Minjae Lee</strong>, San Kim,
+                    <a href="http://hankook.github.io/">Hankook Lee</a>, Sungjun Cho, Sungik Choi, Hyunwoo Kim,
+                    <a href="http://ppolon.github.io/">Jonghyun Choi</a><br>
+                    <span class="venue-badge venue-badge--accepted">CVPR 2024</span>
+                    <div class="paper-links">
+                      [<a href="https://arxiv.org/pdf/2404.01628.pdf">pdf</a>]
+                      [<a href="papers/min2024just/min2024learning.bib">bibtex</a>]
+                      [<a href="https://github.com/yonseivnl/earl">code</a>]
+                    </div>
+                  </td>
+                </tr>
 
-              [<a href="https://arxiv.org/pdf/2404.01628.pdf" target="_new">pdf</a>]
-              [<a href="papers/min2024just/min2024learning.bib" target="_new">bibtex</a>]
-              [<a href="https://github.com/yonseivnl/earl" target="_new">code</a>]
-            </td>
-          </tr>
-          <!-- ################################################################################################################### -->
+              </tbody>
+            </table>
 
-        </tbody></table>
-        <p></p>
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <!-- <td style="padding:0px;width:100%;vertical-align:middle"><heading>&nbsp&nbsp&nbsp Awards</heading></td>
-        </tbody></table>
-        <ul>
-          <li>
-            <papertitle> <a href="https://wvcl.vis.xyz/challenges" target="_new">1st Place in Continual Test-time Adaptation for Object Detection </a></papertitle> - VCL Workshop @ ICCV 2023
-            [<a href="https://yonseivnl.github.io/research/papers/iccvw23_paper_ttadame.pdf" target="_new">technical report</a>]
-            <br>
-          </li>
-          <li>
-            <papertitle> <a href="https://sites.google.com/view/clvision2024/challenge?authuser=0" target="_new">2nd Place in Class-Incremental with Repetition (CIR) using Unlabeled Data </a></papertitle> - 5th CLVISION workshop @ CVPR 2024 -->
-            <!-- [<a href="https://yonseivnl.github.io/research/papers/iccvw23_paper_ttadame.pdf" target="_new">technical report</a>] -->
-            <!-- <br> -->
-          <!-- </li> -->
-        <!-- </ul> -->
-        <!-- <br> -->
+            <!-- ───────────── Academic Services ───────────── -->
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px;">
+                    <h2>Academic Services</h2>
+                    <div class="cv-item">
+                      <div class="cv-title">Reviewer</div>
+                      <ul class="cv-list">
+                        <li>Conferences: CoLLAs (2026), ECCV (2026), NeurIPS (2026)</li>
+                        <li>Journals: TPAMI (2026)</li>
+                      </ul>
+                    </div>
+                    <div class="cv-item">
+                      <div class="cv-title">Program Committee Member</div>
+                      <ul class="cv-list">
+                        <li>Challenge organizer at ICCV 2025 @ Continual Learning and Computer Vision Workshop</li>
+                        <li>Conference organizer at Korea Society of IT Services Spring Conference 2022</li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <td style="padding:0px;width:100%;vertical-align:middle"><heading>&nbsp&nbsp&nbsp Academic Services</heading></td>
-        </tbody></table>
-        <ul>
-          <li><papertitle>Reviewer</papertitle></li>
-          <ol style="margin-left: -3em">- CVPR(24') </ol>
-        </ul> -->
+            <!-- ───────────── Scholarships ───────────── -->
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px;">
+                    <h2>Scholarships</h2>
+                    <div class="cv-item">
+                      <div class="cv-row">
+                        <span class="cv-title">Seoul Tech Scholarship</span>
+                        <span class="news-date">Mar 2026 – Feb 2027</span>
+                      </div>
+                      <ul class="cv-list"><li>Research fund ($14,500)</li></ul>
+                    </div>
+                    <div class="cv-item">
+                      <div class="cv-row">
+                        <span class="cv-title">Seoul National University AI Fellowship Scholarship</span>
+                        <span class="news-date">Sep 2024 – Aug 2026</span>
+                      </div>
+                      <ul class="cv-list"><li>Full tuition ($3,000/semester)</li></ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr>
-            <td style="padding:0px">
-              <br>
-              <p style="text-align:right;font-size:small;">
-                This template is from <a href="https://jonbarron.info/" target="_new">Jon Barron</a>.
-              </p>
-            </td>
-          </tr>
-        </tbody></table>
-      </td>
-    </tr>
-  </table>
+            <!-- ───────────── Awards (hidden; remove the comment markers to show) ─────────────
+            <table class="section-wrap" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td style="padding:16px;">
+                    <h2>Awards</h2>
+                    <ul>
+                      <li><a href="https://wvcl.vis.xyz/challenges">1st Place in Continual Test-time Adaptation for Object Detection</a> — VCL Workshop @ ICCV 2023
+                        [<a href="https://yonseivnl.github.io/research/papers/iccvw23_paper_ttadame.pdf">technical report</a>]</li>
+                      <li><a href="https://sites.google.com/view/clvision2024/challenge?authuser=0">2nd Place in Class-Incremental with Repetition (CIR) using Unlabeled Data</a> — 5th CLVISION Workshop @ CVPR 2024</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            -->
 
-</body>
+            <!-- ───────────── Footer ───────────── -->
+            <table style="width:100%;border:0;border-spacing:0;margin:0 auto;">
+              <tbody>
+                <tr>
+                  <td>
+                    <br>
+                    <p class="footer">
+                      Website template by <a href="https://jonbarron.info/">Jon Barron</a>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Dark-mode toggle -->
+    <script>
+      (function () {
+        var html = document.documentElement;
+        var btn = document.getElementById('themeToggle');
+        function syncIcon() {
+          btn.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+        }
+        syncIcon();
+        btn.addEventListener('click', function () {
+          var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          if (next === 'dark') html.setAttribute('data-theme', 'dark');
+          else html.removeAttribute('data-theme');
+          try { localStorage.setItem('theme', next); } catch (e) {}
+          syncIcon();
+        });
+      })();
+    </script>
+  </body>
 </html>
