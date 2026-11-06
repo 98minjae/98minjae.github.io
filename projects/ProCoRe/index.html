@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ProCoRe improves multimodal in-context learning by strengthening visual grounding with a proposition-level contrastive reward, without any ICL-formatted training data.">
+  <meta name="keywords" content="Multimodal In-context Learning, Visual Grounding, Multimodal LLM, Contrastive Reward, Reinforcement Learning, Hallucination, ProCoRe, PICL">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visual Grounding First, Multimodal In-context Learning Follows</title>
+  <link rel="canonical" href="https://98minjae.github.io/projects/ProCoRe/">
+  <meta property="og:site_name" content="Minjae Lee">
+  <meta property="og:title" content="Visual Grounding First, Multimodal In-context Learning Follows">
+  <meta property="og:description" content="ProCoRe improves multimodal in-context learning by strengthening visual grounding, without any ICL-formatted training data.">
+  <meta property="og:url" content="https://98minjae.github.io/projects/ProCoRe/">
+  <meta property="og:image" content="https://98minjae.github.io/projects/ProCoRe/static/images/overview.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=2026-11-06">
+
+  <!-- Apply the saved theme before paint (same key as the homepage). -->
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+</head>
+<body>
+
+<!-- <a class="top-btn home-link" href="https://98minjae.github.io/" aria-label="Back to Minjae Lee's homepage" title="Home"> -->
+  <!-- <i class="fas fa-home"></i>
+</a>
+<button class="top-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button> -->
+
+<!-- ───────────── Title ───────────── -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Visual Grounding First,<br>Multimodal In-context Learning Follows</h1>
+          <div class="is-size-4 publication-authors venue-line">
+            <span class="author-block">NeurIPS 2026</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://dbd05088.github.io">Minhyuk Seo</a><sup>1</sup>*,</span>
+            <span class="author-block"><a href="https://98minjae.github.io">Minjae Lee</a><sup>2</sup>*,</span>
+            <span class="author-block">Chaeeun Lee<sup>2</sup>,</span>
+            <span class="author-block">Wei Lin<sup>4</sup>,</span>
+            <span class="author-block">Muhammad Jehanzeb Mirza<sup>5</sup>,</span>
+            <span class="author-block">Tinne Tuytelaars<sup>3</sup>&dagger;,</span>
+            <span class="author-block"><a href="https://ppolon.github.io/">Jonghyun Choi</a><sup>2</sup>&dagger;</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>UC Berkeley,</span>
+            <span class="author-block"><sup>2</sup>Seoul National University,</span>
+            <span class="author-block"><sup>3</sup>KU Leuven,</span>
+            <span class="author-block"><sup>4</sup>Xero,</span>
+            <span class="author-block"><sup>5</sup>MIT CSAIL</span>
+          </div>
+
+          <div class="is-size-6 publication-authors author-note">
+            <span class="author-block">* equal contribution &nbsp;&middot;&nbsp; &dagger; corresponding authors</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2610.30592" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2610.30592" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/snumprlab/procore" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── Teaser ───────────── -->
+<section class="section teaser-section">
+  <div class="container is-max-desktop">
+    <figure class="fig is-mid">
+      <img src="./static/images/teaser.jpg" alt="Attention maps for multimodal ICL with a generic identifier (monkey) and a personalized identifier (Jaden)">
+      <figcaption>
+        Visual-token attention when predicting the highlighted word (Qwen-VL-3-8B).
+        (a) With a generic identifier such as &ldquo;monkey&rdquo;, every model looks at the right region.
+        (b) Once the demonstrations call the monkey &ldquo;Jaden&rdquo;, baselines lose the region and fall back to generic words,
+        while ProCoRe stays grounded and answers &ldquo;Jaden&rdquo;.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────── TL;DR + abstract ───────────── -->
+<section class="section is-alt">
+  <div class="container is-max-desktop">
+    <div class="narrow">
+      <h2 class="title is-3 has-text-centered">TL;DR</h2>
+      <div class="tldr-card">
+        <span class="pill">ProCoRe</span> improves multimodal in-context learning
+        <span class="hl-main">without a single ICL-formatted training example</span>.
+        It fixes the underlying bottleneck, weak visual grounding, with a
+        <span class="hl-warm">proposition-level contrastive reward</span> on visually contrastive image pairs.
+      </div>
+
+      <h2 class="title is-3 block-title">Abstract</h2>
+      <div class="abstract-card">
+        <p>
+          LLMs have shown strong in-context learning (ICL) capability, but extending it to Multimodal LLMs (MLLMs) remains challenging.
+          Prior multimodal ICL methods often rely on ICL-specific datasets for additional training or task vector extraction,
+          which can improve performance on the same ICL benchmark used for adaptation.
+          However, they do not generalize well to other benchmarks and often induce forgetting in previously well-solved tasks.
+        </p>
+        <p>
+          For this reason, we identify <strong>visual grounding</strong> as the key bottleneck in multimodal ICL:
+          MLLMs often fail to attend to task-relevant visual evidence in demonstrations, instead over-relying on textual cues and producing hallucinated outputs.
+          To address this, we propose <strong>ProCoRe</strong> to enhance visual grounding through contrastive reinforcement learning on multimodal contrastive data.
+          ProCoRe generates captions for contrastive image pairs, decomposes them into propositions,
+          and optimizes contrastive rewards that encourage alignment with corresponding images while discouraging mismatched ones.
+        </p>
+        <p>
+          Despite never seeing ICL-formatted training examples, ProCoRe improves average multimodal ICL classification accuracy by 5.6%
+          and captioning ROUGE-L by 13.8% over the off-the-shelf Qwen-VL-3-8B model, outperforming ICL-data-dependent state of the arts across benchmarks.
+          Finally, we introduce <strong>PICL</strong>, a personalized multimodal ICL captioning benchmark that tests whether MLLMs genuinely understand
+          visual demonstrations rather than relying on pre-trained semantic priors.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── Motivation ───────────── -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="sec-header">
+      <span class="badge">Motivation</span>
+      <h2 class="sec-title">Training on ICL Data Does Not Fix Multimodal ICL</h2>
+      <p class="sec-subtitle">Methods that adapt to an ICL benchmark do well on that benchmark, and poorly on the next one.</p>
+    </div>
+
+    <div class="callout">
+      Multimodal ICL needs the model to bind what it sees in each demonstration image to the text beside it, then carry that link over to the query.
+      Recent MLLMs often skip the first half: they lean on the textual cues and imitate the demonstration text.
+      We ask why this happens instead of training on more ICL data.
+    </div>
+
+    <figure class="fig">
+      <img src="./static/images/generalization.png" alt="TrueMICL accuracy of ICL data-dependent methods trained on TrueMICL versus ISEKAI, compared with ProCoRe">
+      <figcaption>
+        TrueMICL accuracy. Blue-shaded bars are baselines trained on TrueMICL itself; red-shaded bars are the same baselines trained on ISEKAI.
+        They beat the off-the-shelf model mostly when the training and test benchmarks match, and drop below it when they differ.
+        ProCoRe uses no ICL data and outperforms both groups.
+      </figcaption>
+    </figure>
+
+    <h3 class="sub-heading">Three Routes to Better Multimodal ICL</h3>
+    <div class="card-grid cols-3" style="margin-top:0;">
+      <div class="card">
+        <h3>Retrieve and Order Demonstrations</h3>
+        <span class="card-tag">e.g., RICES, VICL, MMICES</span>
+        <p>Pick demonstrations similar to the query. Sensitive to prompt design and sample order, and often no better than random selection.</p>
+      </div>
+      <div class="card">
+        <h3>Adapt on ICL Datasets</h3>
+        <span class="card-tag">ICL training and task vectors, e.g., STV, MimIC, MTV</span>
+        <p>Strong on the benchmark used for adaptation, weak on others, and prone to forgetting previously solved tasks such as simple VQA.</p>
+      </div>
+      <div class="card is-ours">
+        <h3>ProCoRe: Ground First</h3>
+        <span class="card-tag">Ours</span>
+        <p><strong>Train visual grounding on contrastive image pairs. ICL improves as a consequence, across benchmarks.</strong></p>
+      </div>
+    </div>
+
+    <div class="card-grid cols-2">
+      <div class="card">
+        <h3>Finding #1: Limited Generalization and Forgetting</h3>
+        <p>ICL data-dependent methods fit their training benchmark. On a different ICL benchmark they often fall below the off-the-shelf model, and ICL training degrades general VQA.</p>
+      </div>
+      <div class="card">
+        <h3>Finding #2: Weak Visual Grounding Is the Bottleneck</h3>
+        <p>MLLMs attend to irrelevant regions instead of the task-relevant evidence, which leads to hallucination. The failure is sharpest for personalized identifiers that pre-training never covered.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── Method ───────────── -->
+<section class="section is-alt">
+  <div class="container is-max-desktop">
+    <div class="sec-header">
+      <span class="badge">Method</span>
+      <h2 class="sec-title">ProCoRe: Proposition-level Contrastive Reward</h2>
+      <p class="sec-subtitle">
+        A caption that misses fine detail fits both images of a contrastive pair, so it earns a low reward.
+        Optimizing the reward pushes the model to describe what is actually in each image.
+      </p>
+    </div>
+
+    <figure class="fig">
+      <img src="./static/images/overview.png" alt="Overview of ProCoRe: image captioning, proposition decomposition, and reward scoring">
+      <figcaption>
+        Overview of ProCoRe on a contrastive pair that differs in one object (fire hydrant vs. parking meter) and shares the rest of the scene.
+      </figcaption>
+    </figure>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <div class="step-head">
+          <span class="step-num">1</span>
+          <strong class="step-title">Caption a Contrastive Pair</strong>
+        </div>
+        <p>The MLLM captions two images that differ only in fine-grained content such as object identity or attributes (InpaintCOCO, EQBEN).</p>
+      </div>
+      <div class="card">
+        <div class="step-head">
+          <span class="step-num">2</span>
+          <strong class="step-title">Decompose into Propositions</strong>
+        </div>
+        <p>GPT-4o-mini splits the two captions into propositions unique to image 1, unique to image 2, and shared by both.</p>
+      </div>
+      <div class="card">
+        <div class="step-head">
+          <span class="step-num">3</span>
+          <strong class="step-title">Score and Optimize</strong>
+        </div>
+        <p>Each proposition group gets its own reward, and the MLLM is optimized with Group Relative Policy Optimization (GRPO).</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Why Propositions Instead of Whole Sentences?</h3>
+    <div class="callout">
+      A sentence-level contrastive reward punishes any content the two images share, because describing it raises similarity to the wrong image.
+      The model then learns shortcut captions like &ldquo;The object is a hydrant&rdquo; and drops the sidewalk and the sign.
+      ProCoRe applies the contrast only to image-specific propositions and rewards shared propositions separately, so captions stay complete.
+      <div class="formula">
+        R = &lambda;<sub>I</sub>&thinsp;R<sub>I</sub> + &lambda;<sub>T</sub>&thinsp;R<sub>T</sub> + &lambda;<sub>s</sub>&thinsp;R<sub>s</sub>
+      </div>
+    </div>
+
+    <div class="card-grid cols-3" style="margin-top:0;">
+      <div class="card">
+        <h3>Image&ndash;Text Reward R<sub>I</sub></h3>
+        <p>Each image-specific proposition should match its own image more than the other one, measured by CLIP similarity.</p>
+      </div>
+      <div class="card">
+        <h3>Text&ndash;Text Reward R<sub>T</sub></h3>
+        <p>Each image-specific proposition should be entailed by its own ground-truth caption and not by the other, measured by an NLI entailment score.</p>
+      </div>
+      <div class="card">
+        <h3>Shared-Content Reward R<sub>s</sub></h3>
+        <p>Shared propositions should be supported by both images and both ground-truth captions, which keeps common scene details in the caption.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── Results ───────────── -->
+<section class="section is-alt">
+  <div class="container is-max-desktop">
+    <div class="sec-header">
+      <span class="badge">Experiments</span>
+      <h2 class="sec-title">Quantitative Results</h2>
+      <p class="sec-subtitle">
+        All main comparisons use Qwen-VL-3-8B. For more models, model sizes, and benchmarks, see the
+        <a href="https://arxiv.org/abs/2610.30592">paper</a>.
+      </p>
+    </div>
+
+    <div class="card-grid cols-3" style="margin-top:0;">
+      <div class="card">
+        <h3>ICL Captioning</h3>
+        <p>ProCoRe has the best ROUGE-L in every shot setting on MS COCO and PICL, ahead of baselines that were trained on those same benchmarks.</p>
+      </div>
+      <div class="card">
+        <h3>ICL Classification</h3>
+        <p>ProCoRe is best in all TrueMICL settings and in 3 of 5 ISEKAI settings, while ICL-trained baselines drop when the test benchmark changes.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Method</th>
+              <th rowspan="2">ICL train data</th>
+              <th colspan="5" class="group-start">TrueMICL (shots)</th>
+              <th colspan="5" class="group-start">ISEKAI (shots)</th>
+            </tr>
+            <tr>
+              <th class="group-start">0</th><th>1</th><th>2</th><th>4</th><th>8</th>
+              <th class="group-start">0</th><th>2</th><th>4</th><th>8</th><th>12</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-ref">
+              <td>Off-the-shelf</td><td>&ndash;</td>
+              <td class="group-start">27.11</td><td>44.79</td><td>48.83</td><td>55.03</td><td>62.70</td>
+              <td class="group-start">0.16</td><td>37.98</td><td>83.68</td><td>93.79</td><td>96.42</td>
+            </tr>
+            <tr>
+              <td>RICES <span class="muted">retrieval</span></td><td>&ndash;</td>
+              <td class="group-start">27.11</td><td>44.79</td><td>47.16</td><td>51.83</td><td>61.86</td>
+              <td class="group-start">0.16</td><td>36.31</td><td>81.21</td><td>90.53</td><td>92.36</td>
+            </tr>
+            <tr>
+              <td>FV <span class="muted">task vector</span></td><td>TrueMICL</td>
+              <td class="group-start">28.82</td><td>43.88</td><td>48.61</td><td>55.87</td><td>60.65</td>
+              <td class="group-start">0.96</td><td>31.58</td><td>78.78</td><td>93.19</td><td>97.92</td>
+            </tr>
+            <tr>
+              <td>FV <span class="muted">task vector</span></td><td>ISEKAI</td>
+              <td class="group-start">26.44</td><td>38.76</td><td>41.98</td><td>52.02</td><td>55.18</td>
+              <td class="group-start">1.21</td><td>35.44</td><td>84.72</td><td>92.18</td><td>97.03</td>
+            </tr>
+            <tr>
+              <td>MimIC <span class="muted">ICL training</span></td><td>TrueMICL</td>
+              <td class="group-start">27.08</td><td>48.62</td><td>54.65</td><td>55.00</td><td>61.21</td>
+              <td class="group-start">3.02</td><td>34.86</td><td>81.03</td><td>85.51</td><td>92.19</td>
+            </tr>
+            <tr>
+              <td>MimIC <span class="muted">ICL training</span></td><td>ISEKAI</td>
+              <td class="group-start">27.08</td><td>38.74</td><td>43.55</td><td>51.12</td><td>56.76</td>
+              <td class="group-start">0.16</td><td>44.87</td><td>83.02</td><td>94.74</td><td>94.11</td>
+            </tr>
+            <tr>
+              <td>VOLCANO <span class="muted">hallucination</span></td><td>&ndash;</td>
+              <td class="group-start">31.41</td><td>47.76</td><td>50.68</td><td>57.43</td><td>64.12</td>
+              <td class="group-start">0.21</td><td>42.08</td><td>74.96</td><td>94.73</td><td>92.11</td>
+            </tr>
+            <tr class="is-ours">
+              <td>ProCoRe (Ours)</td><td>none</td>
+              <td class="group-start"><strong>33.02</strong></td><td><strong>51.47</strong></td><td><strong>56.11</strong></td><td><strong>62.26</strong></td><td><strong>68.08</strong></td>
+              <td class="group-start"><strong>3.94</strong></td><td><strong>50.72</strong></td><td><strong>86.23</strong></td><td><strong>96.18</strong></td><td><strong>98.41</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-caption">
+        Multimodal ICL classification (accuracy), selected rows from Table 2 of the paper: one representative method per baseline category.
+        For methods trained on ICL data, both training datasets are shown. Bold marks the best score in each column.
+      </p>
+    </div>
+
+    <div class="sec-header is-sub">
+      <h2 class="sec-title">Where the Gains Come From</h2>
+      <p class="sec-subtitle">Better ICL comes with stronger grounding and no forgetting.</p>
+    </div>
+
+    <figure class="fig">
+      <img src="./static/images/forgetting.png" alt="ROUGE-L on IconQA and TextVQA for ICL training-based methods and ProCoRe">
+      <figcaption>
+        <strong>General VQA.</strong> ICL training-based methods lose performance on simple VQA tasks (IconQA, TextVQA) that the off-the-shelf model already solved. ProCoRe improves them.
+      </figcaption>
+    </figure>
+
+    <figure class="fig">
+      <img src="./static/images/tas.png" alt="Target attention score on PororoSV and StoryStream">
+      <figcaption>
+        <strong>Visual grounding.</strong> Target attention score (TAS, higher is better) measures how much each generated token attends to its target image region. ProCoRe scores highest.
+      </figcaption>
+    </figure>
+
+    <div class="sec-header is-sub">
+      <h2 class="sec-title">Ablation</h2>
+      <p class="sec-subtitle">The gain comes from the reward, and the proposition-level reward beats the sentence-level one.</p>
+    </div>
+
+    <div class="table-wrap" style="margin-top:0;">
+      <div class="table-scroll">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Method</th>
+              <th colspan="5" class="group-start">MS COCO (shots)</th>
+              <th colspan="5" class="group-start">PICL (shots)</th>
+            </tr>
+            <tr>
+              <th class="group-start">0</th><th>1</th><th>2</th><th>4</th><th>8</th>
+              <th class="group-start">0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="is-ref">
+              <td>Off-the-shelf</td>
+              <td class="group-start">15.53</td><td>19.02</td><td>21.21</td><td>23.52</td><td>25.65</td>
+              <td class="group-start">24.50</td><td>25.40</td><td>24.78</td><td>28.30</td><td>29.29</td>
+            </tr>
+            <tr>
+              <td>SFT on contrastive pairs</td>
+              <td class="group-start">19.48</td><td>27.92</td><td>30.11</td><td>26.84</td><td>37.62</td>
+              <td class="group-start">22.13</td><td>27.88</td><td>23.41</td><td>30.74</td><td>26.81</td>
+            </tr>
+            <tr>
+              <td>Sentence-level contrastive reward</td>
+              <td class="group-start">36.02</td><td>45.73</td><td>43.21</td><td>44.11</td><td>42.58</td>
+              <td class="group-start">32.88</td><td>34.74</td><td>31.92</td><td>34.02</td><td>33.41</td>
+            </tr>
+            <tr class="is-ours">
+              <td>ProCoRe (Ours)</td>
+              <td class="group-start"><strong>39.12</strong></td><td><strong>46.88</strong></td><td><strong>46.41</strong></td><td><strong>46.26</strong></td><td><strong>46.03</strong></td>
+              <td class="group-start"><strong>33.54</strong></td><td><strong>36.11</strong></td><td><strong>35.89</strong></td><td><strong>36.71</strong></td><td><strong>36.76</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-caption">
+        Captioning ROUGE-L (Table 3 of the paper). Supervised fine-tuning on the same contrastive pairs gives only marginal gains.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── BibTeX ───────────── -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{seo2026visual,
+  title     = {Visual Grounding First, Multimodal In-context Learning Follows},
+  author    = {Seo, Minhyuk and Lee, Minjae and Lee, Chaeeun and Lin, Wei and Mirza, Muhammad Jehanzeb and Tuytelaars, Tinne and Choi, Jonghyun},
+  booktitle = {NeurIPS},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content">
+      This website is based on the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies template</a>.
+    </div>
+  </div>
+</footer>
+
+<!-- Dark-mode toggle -->
+<script>
+  (function () {
+    var html = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function syncIcon() {
+      btn.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+    }
+    syncIcon();
+    btn.addEventListener('click', function () {
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (next === 'dark') html.setAttribute('data-theme', 'dark');
+      else html.removeAttribute('data-theme');
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      syncIcon();
+    });
+  })();
+</script>
+</body>
+</html>
